@@ -15,8 +15,41 @@ namespace Practica_5
     {
         int[] Memoria = { 1000, 400, 1800, 700, 900, 1200, 1500 };
         int[] Puestos = { 0, 0, 0, 0, 0, 0, 0 };
-        int contador = 1;
+        DataTable Programas = new DataTable();
+        int contador = 0;
         int poscision = 0;
+
+        private void Show_Prog()
+        {
+            int i;
+            richTextBox2.Clear();
+            richTextBox2.AppendText("Identificador, Nombre, Peso:\n");
+            foreach (DataRow row in Programas.Rows)
+            {
+                string linea = "";
+                for (i = 0; i < Programas.Columns.Count; i++)
+                {
+                    linea += row[i].ToString() + ",\t";
+                }
+                richTextBox2.AppendText(linea + "\n");
+            }
+        }
+
+        private void Show_mem()
+        {
+            int i;
+            richTextBox1.Clear();
+            richTextBox1.AppendText("Memoria:\n");
+            for (i = 0; i < Memoria.Length; i++)
+            {
+                richTextBox1.AppendText(Memoria[i] + ",");
+            }
+            richTextBox1.AppendText("\nNum de programa (y posición):\n");
+            for (i = 0; i < Memoria.Length; i++)
+            {
+                richTextBox1.AppendText(Puestos[i] + ",");
+            }
+        }
 
         private void Primer_ajuste(int num,int tam)
         {
@@ -32,18 +65,9 @@ namespace Practica_5
                 }
             }
 
-            if (ps == false) MessageBox.Show("No se encontro espacio");
+            if (ps == false) MessageBox.Show("No se encontro espacio para el elemento: " + num);
 
-            richTextBox1.AppendText("Memoria:\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Memoria[i] + ",");
-            }
-            richTextBox1.AppendText("\nNum de programa (y posición):\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Puestos[i] + ",");
-            }
+            Show_mem();
         }
 
         private void Mejor_ajuste(int num, int tam)
@@ -68,18 +92,9 @@ namespace Practica_5
                 }
             }
 
-            if (mejor == 0) MessageBox.Show("No se encontro espacio");
+            if (mejor == 0) MessageBox.Show("No se encontro espacio para el elemento: " + num);
 
-            richTextBox1.AppendText("Memoria:\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Memoria[i] + ",");
-            }
-            richTextBox1.AppendText("\nNum de programa (y posición):\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Puestos[i] + ",");
-            }
+            Show_mem();
         }
 
         private void Peor_ajuste(int num, int tam)
@@ -104,18 +119,9 @@ namespace Practica_5
                 }
             }
 
-            if (peor == 0) MessageBox.Show("No se encontro espacio");
+            if (peor == 0) MessageBox.Show("No se encontro espacio para el elemento: " + num);
 
-            richTextBox1.AppendText("Memoria:\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Memoria[i] + ",");
-            }
-            richTextBox1.AppendText("\nNum de programa (y posición):\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Puestos[i] + ",");
-            }
+            Show_mem();
         }
 
         private void Siguiente_ajuste(int num, int tam)
@@ -145,52 +151,17 @@ namespace Practica_5
                 } 
             }
 
-            if (ps == false) MessageBox.Show("No se encontro espacio");
+            if (ps == false) MessageBox.Show("No se encontro espacio para el elemento: " + num);
 
-            richTextBox1.AppendText("Memoria:\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Memoria[i] + ",");
-            }
-            richTextBox1.AppendText("\nNum de programa (y posición):\n");
-            for (i = 0; i < Memoria.Length; i++)
-            {
-                richTextBox1.AppendText(Puestos[i] + ",");
-            }
+            Show_mem();
         }
 
         public Form1()
         {
+            Programas.Columns.Add("Identificador");
+            Programas.Columns.Add("Nombres");
+            Programas.Columns.Add("Pesos");
             InitializeComponent();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridView1.Columns[e.ColumnIndex] == Column3)
-            {
-                richTextBox1.Clear();
-                Primer_ajuste(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value),
-                              Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value));
-            } 
-            if (dataGridView1.Columns[e.ColumnIndex] == Column4)
-            {
-                richTextBox1.Clear();
-                Mejor_ajuste(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value),
-                             Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value));
-            } 
-            if (dataGridView1.Columns[e.ColumnIndex] == Column5)
-            {
-                richTextBox1.Clear();
-                Peor_ajuste(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value),
-                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value));
-            } 
-            if (dataGridView1.Columns[e.ColumnIndex] == Column6)
-            {
-                richTextBox1.Clear();
-                Siguiente_ajuste(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value),
-                                 Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value));
-            }
-
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -214,41 +185,132 @@ namespace Practica_5
                         {
                             line = line.Substring(0, index); 
                         }
-                        string[] values = line.Split(','); 
-                        string row = contador.ToString() + "," + line; 
-                        dataGridView1.Rows.Add(row.Split(',')); 
-                        contador++; 
+                        string[] values = line.Split(',');
+                        DataRow row = Programas.NewRow();
+                        row["Identificador"] = contador.ToString();
+                        row["Nombres"] = values[0];
+                        row["Pesos"] = values[1];
+                        Programas.Rows.Add(row);
+                        contador++;
                     }
                 }
                 toolStripContainer1.ContentPanel.Enabled = true;
+                toolStripButton2.Visible = true;
+                toolStripButton3.Visible = true;
+                toolStripButton4.Visible = true;
+                toolStripButton5.Visible = true;
+                toolStripButton6.Visible = true;  
+                Show_Prog();
+                Show_mem();
+            }
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            int i;
+            richTextBox1.Clear();
+            for (i = 0; i < Puestos.Length; i++)
+            {
+                Puestos[i] = 0;
+            }
+
+            Show_mem();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(richTextBox3.Text) && !String.IsNullOrEmpty(richTextBox4.Text) && comboBox1.SelectedItem != null)
+            {
+                DataRow row = Programas.NewRow();
+                row["Identificador"] = contador.ToString();
+                row["Nombres"] = richTextBox3.Text;
+                row["Pesos"] = richTextBox4.Text;
+                if(comboBox1.SelectedItem.ToString() == "Inicio")
+                {
+                    Programas.Rows.InsertAt(row, 0);
+                } else
+                {
+                    Programas.Rows.Add(row);
+                }
+                Show_Prog();
+                contador++;
+            }
+            else
+            {
+                MessageBox.Show("Rellene todos los campos");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int[] nuevoArreglo;
+            if(!String.IsNullOrEmpty(richTextBox5.Text) && comboBox2.SelectedItem != null)
+            {
+                if (comboBox2.SelectedItem.ToString() == "Inicio")
+                {
+                    nuevoArreglo = new int[Memoria.Length + 1];
+                    nuevoArreglo[0] = int.Parse(richTextBox5.Text);
+                    Array.Copy(Memoria, 0, nuevoArreglo, 1, Memoria.Length);
+                    Memoria = nuevoArreglo;
+
+                    nuevoArreglo = new int[Memoria.Length + 1];
+                    nuevoArreglo[0] = 0;
+                    Array.Copy(Puestos, 0, nuevoArreglo, 1, Puestos.Length);
+                    Puestos = nuevoArreglo;
+                }
+                else
+                {
+                    nuevoArreglo = new int[Memoria.Length + 1];
+                    Array.Copy(Memoria, nuevoArreglo, Memoria.Length);
+                    nuevoArreglo[nuevoArreglo.Length - 1] = int.Parse(richTextBox5.Text);
+                    Memoria = nuevoArreglo;
+
+                    nuevoArreglo = new int[Memoria.Length + 1];
+                    Array.Copy(Puestos, nuevoArreglo, Puestos.Length);
+                    nuevoArreglo[nuevoArreglo.Length - 1] = 0;
+                    Puestos = nuevoArreglo;
+                }
+                Show_mem();
+            } 
+            else
+            {
+                MessageBox.Show("Rellene todos los campos");
             }
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            string row = contador.ToString();
-            dataGridView1.Rows.Add(row);
-            contador++;
+            int i;
+            for(i = 0; i < Programas.Rows.Count; i++)
+            {
+                Primer_ajuste(Convert.ToInt32(Programas.Rows[i][0]), Convert.ToInt32(Programas.Rows[i][2]));
+            }
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             int i;
-            richTextBox1.Clear();
-            for (i = 0;i<Puestos.Length;i++)
+            for (i = 0; i < Programas.Rows.Count; i++)
             {
-                Puestos[i] = 0;
+                Mejor_ajuste(Convert.ToInt32(Programas.Rows[i][0]), Convert.ToInt32(Programas.Rows[i][2]));
             }
+        }
 
-            richTextBox1.AppendText("Memoria:\n");
-            for (i = 0; i < Memoria.Length; i++)
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            int i;
+            for (i = 0; i < Programas.Rows.Count; i++)
             {
-                richTextBox1.AppendText(Memoria[i] + ",");
+                Peor_ajuste(Convert.ToInt32(Programas.Rows[i][0]), Convert.ToInt32(Programas.Rows[i][2]));
             }
-            richTextBox1.AppendText("\nNum de programa (y posición):\n");
-            for (i = 0; i < Memoria.Length; i++)
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            int i;
+            for (i = 0; i < Programas.Rows.Count; i++)
             {
-                richTextBox1.AppendText(Puestos[i] + ",");
+                Siguiente_ajuste(Convert.ToInt32(Programas.Rows[i][0]), Convert.ToInt32(Programas.Rows[i][2]));
             }
         }
     }
