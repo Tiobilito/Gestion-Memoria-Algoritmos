@@ -58,7 +58,7 @@ Este proyecto es una aplicación de Windows Forms que simula la gestión de memo
 1. Clona el repositorio en tu máquina local.
 
    ```sh
-   git clone https://github.com/tu_usuario/Practica-5.git
+   git clone https://github.com/Tiobilito/Gestion-Memoria-Algoritmos.git
 
    ```
 
